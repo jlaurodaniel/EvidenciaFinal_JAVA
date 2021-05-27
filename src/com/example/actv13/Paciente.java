@@ -23,17 +23,6 @@ public class Paciente extends Usuario {
         pacientes = ( ArrayList <Paciente> )leyendoFichero.readObject();
         leyendoFichero.close();
 
-        System.out.println("| * -------------------------------------------- * |");
-        System.out.println("| *     ********  Nuevo Paciente  *********      * |");
-        System.out.println("| * -------------------------------------------- * |");
-        System.out.println("| *     Escribe tu nombre o usuario :            * |");
-        String nombre=sc.nextLine();
-        System.out.println("| *  Escribe la contraseña para "+nombre+" :     * |");
-        String pass=sc.nextLine();
-        System.out.println("| *  Que padecimiento presenta actualmente?:     * |");
-        String padecimiento=sc.nextLine();
-        System.out.println("| *--------------------------------------------  * |");
-
         UUID uuid = UUID.randomUUID();
         String id = uuid.toString();
         Paciente paciente=new Paciente(this.id,this.nombre,this.password,this.padecimiento);
