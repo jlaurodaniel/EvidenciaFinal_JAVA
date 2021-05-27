@@ -1,5 +1,7 @@
 package com.example.actv13;
 
+import java.util.ArrayList;
+
 public class Administrador extends Usuario{
     public Usuario usuario;
     public String rol;
@@ -9,4 +11,5 @@ public class Administrador extends Usuario{
         this.usuario = usuario;
         this.rol = rol;
     }
+
 }

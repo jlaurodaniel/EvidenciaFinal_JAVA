@@ -1,13 +1,13 @@
 package com.example.actv13;
 
 public class Usuario {
-    public Usuario(int id, String nombre, String password) {
+    public Usuario(String id, String nombre, String password) {
         this.id = id;
         this.nombre = nombre;
         this.password = password;
     }
 
-    public int id;
+    public String id;
     public String nombre;
     public String password;
 }

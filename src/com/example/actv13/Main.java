@@ -1,5 +1,6 @@
 package com.example.actv13;
 
+import java.util.ArrayList;
 import java.util.Scanner;
 
 public class Main {
@@ -14,6 +15,7 @@ public static Scanner sc=new Scanner(System.in);
         String pass=sc.nextLine();
         System.out.println("--------------------------------------------");
     }
+    //Paciente paciente=new Paciente();
 
     public  void Login(String pass, String user){
 
