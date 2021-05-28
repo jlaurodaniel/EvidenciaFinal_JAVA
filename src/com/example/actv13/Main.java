@@ -40,7 +40,7 @@ public static Scanner sc=new Scanner(System.in);
         }
 
         if (valid){
-            System.out.println("---- Usuario y contrase;a correctos  ------");
+            System.out.println("---- Usuario y contraseña correctos  ------");
             while (menu){
                 System.out.println("Escribe 1 para registrar un doctor" +
                         "Escribe 2 para registrar paciente\n" +
@@ -51,6 +51,9 @@ public static Scanner sc=new Scanner(System.in);
                 int answer=sc.nextInt();
                 switch (answer){
                     case 1:
+
+                        break;
+                    case 2:
                         System.out.println("| * -------------------------------------------- * |");
                         System.out.println("| *     ********  Nuevo Paciente  *********      * |");
                         System.out.println("| * -------------------------------------------- * |");
@@ -71,8 +74,6 @@ public static Scanner sc=new Scanner(System.in);
                         }else {
                             System.out.println("Ocurrio un problema al registrar el paciente, intente de nuevo");
                         }
-                        break;
-                    case 2:
                         break;
                     case 3:
                         break;
