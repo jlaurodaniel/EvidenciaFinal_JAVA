@@ -13,11 +13,13 @@ public class Doctor extends  Usuario{
     }
 
     public Boolean altaDoctor() throws IOException, ClassNotFoundException {
-
-        ArrayList<Doctor> doctors;
-        ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(this.path) );
-        doctors = ( ArrayList <Doctor> )leyendoFichero.readObject();
-        leyendoFichero.close();
+        ArrayList<Doctor> doctors =new ArrayList<Doctor> () ;
+        File archivo = new File(this.path);
+        if (archivo.exists()) {
+            ObjectInputStream leyendoFichero = new ObjectInputStream(new FileInputStream(this.path));
+            doctors = (ArrayList<Doctor>) leyendoFichero.readObject();
+            leyendoFichero.close();
+        }
 
 
         if (doctors.add(new Doctor(this.id,this.nombre,this.password,this.especialidad))){

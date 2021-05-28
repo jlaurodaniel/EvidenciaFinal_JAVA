@@ -13,11 +13,13 @@ public class Administrador extends Usuario{
     }
 
     public Boolean altaAdministrador() throws IOException, ClassNotFoundException {
-
-        ArrayList<Administrador> administradors;
-        ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(this.path) );
-        administradors = ( ArrayList <Administrador> )leyendoFichero.readObject();
-        leyendoFichero.close();
+        ArrayList<Administrador> administradors=new ArrayList<Administrador>();
+        File archivo = new File(this.path);
+        if (archivo.exists()) {
+            ObjectInputStream leyendoFichero = new ObjectInputStream(new FileInputStream(this.path));
+            administradors = (ArrayList<Administrador>) leyendoFichero.readObject();
+            leyendoFichero.close();
+        }
 
 
         if (administradors.add(new Administrador(this.id,this.nombre,this.password,this.rol))){
@@ -31,22 +33,25 @@ public class Administrador extends Usuario{
     }
 
     public Boolean ModificarDoctor(String user,String password,String especialidad) throws IOException, ClassNotFoundException {
+        ArrayList<Doctor> doctors= new ArrayList<Doctor>();
+        File archivo = new File(this.path);
+        if (archivo.exists()) {
+            ObjectInputStream leyendoFichero = new ObjectInputStream(new FileInputStream(this.path));
+            doctors = (ArrayList<Doctor>) leyendoFichero.readObject();
+            leyendoFichero.close();
 
-        ArrayList<Doctor> doctors;
-        ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(this.path) );
-        doctors = ( ArrayList <Doctor> )leyendoFichero.readObject();
-        leyendoFichero.close();
 
-        for (int i=0;i<doctors.size();i++){
-            if (doctors.get(i).nombre.equals(user) & doctors.get(i).password.equals(password)){
-                doctors.set(i,new Doctor(doctors.get(i).id,user,password,especialidad));
-                return true;
+            for (int i = 0; i < doctors.size(); i++) {
+                if (doctors.get(i).nombre.equals(user) & doctors.get(i).password.equals(password)) {
+                    doctors.set(i, new Doctor(doctors.get(i).id, user, password, especialidad));
+                    return true;
+                }
             }
-        }
 
-            ObjectOutputStream escribiendoFichero = new ObjectOutputStream(new FileOutputStream(this.path) );
+            ObjectOutputStream escribiendoFichero = new ObjectOutputStream(new FileOutputStream(this.path));
             escribiendoFichero.writeObject(doctors);
             escribiendoFichero.close();
+        }
 
             return false;
     }

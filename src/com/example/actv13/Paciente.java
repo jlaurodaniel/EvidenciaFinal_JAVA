@@ -18,11 +18,13 @@ public class Paciente extends Usuario {
 
     public Boolean altaPaciente() throws IOException, ClassNotFoundException {
 
-        ArrayList<Paciente> pacientes;
-        ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(this.path) );
-        pacientes = ( ArrayList <Paciente> )leyendoFichero.readObject();
-        leyendoFichero.close();
-
+        ArrayList<Paciente> pacientes=new ArrayList<Paciente>();
+        File archivo = new File(this.path);
+        if (archivo.exists()) {
+            ObjectInputStream leyendoFichero = new ObjectInputStream(new FileInputStream(this.path));
+            pacientes = (ArrayList<Paciente>) leyendoFichero.readObject();
+            leyendoFichero.close();
+        }
 
         if (pacientes.add(new Paciente(this.id,this.nombre,this.password,this.padecimiento))){
             ObjectOutputStream escribiendoFichero = new ObjectOutputStream(new FileOutputStream(this.path) );
