@@ -9,7 +9,9 @@ import java.util.Scanner;
 import java.util.UUID;
 
 public class Main {
-    private String path;
+    private String pathAdmins="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\admin.txt";
+    private String pathPacientes="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\paciente.txt";
+    private String pathDoctores="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\doctor.txt";
 public static Scanner sc=new Scanner(System.in);
     public static void main(String[] args) {
         System.out.println("--------------------------------------------");
@@ -29,7 +31,7 @@ public static Scanner sc=new Scanner(System.in);
         boolean menu=true;
 
         ArrayList<Administrador> administradors= new ArrayList<Administrador>();
-        ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(path) );
+        ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(pathAdmins) );
         administradors = ( ArrayList <Administrador> )leyendoFichero.readObject();
         leyendoFichero.close();
 
@@ -109,9 +111,9 @@ public static Scanner sc=new Scanner(System.in);
                         System.out.println("| *--------------------------------------------  * |");                        
 
                         //Mostrando los doctores disponible para una cita
-                        File archivo = new File(this.path);
+                        File archivo = new File(this.pathDoctores);
                         if (archivo.exists()) {
-                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.path));
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.pathDoctores));
                             ArrayList<Doctor> doctors =  (ArrayList<Doctor>) leerFichero.readObject();
                             leyendoFichero.close();
                             System.out.println("****   doctores disponible para una cita   ****");
@@ -129,9 +131,9 @@ public static Scanner sc=new Scanner(System.in);
                         }
 
                         //Mostrando los pacientes disponible para una cita
-                        File archivo2 = new File(this.path);
+                        File archivo2 = new File(this.pathPacientes);
                         if (archivo2.exists()) {
-                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.path));
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.pathPacientes));
                             ArrayList<Paciente> pacientes  = (ArrayList<Paciente>) leerFichero.readObject();
                             leyendoFichero.close();
                             System.out.println("****   Pacientes disponible para una cita   ****");
@@ -156,9 +158,9 @@ public static Scanner sc=new Scanner(System.in);
                         break;
                     case 4:
                         //Mostrando los doctores disponible para una cita
-                        File archivo3 = new File(this.path);
+                        File archivo3 = new File(this.pathDoctores);
                         if (archivo3.exists()) {
-                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.path));
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.pathDoctores));
                             ArrayList<Cita> citas =  (ArrayList<Cita>) leerFichero.readObject();
                             leyendoFichero.close();
                             System.out.println("****   Citas existentes   ****");
