@@ -19,13 +19,13 @@ public class Cita {
         this.doctor = doctor;
     }
 
-    public Boolean altaCita(Paciente paciente,Doctor doctor) throws IOException, ClassNotFoundException {
+    public Boolean altaCita() throws IOException, ClassNotFoundException {
         ArrayList<Cita> citas;
         ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(this.path) );
         citas = ( ArrayList <Cita> )leyendoFichero.readObject();
         leyendoFichero.close();
 
-        if (citas.add(new Cita(this.id,this.fecha,this.motivo,paciente,doctor))){
+        if (citas.add(new Cita(this.id,this.fecha,this.motivo,this.paciente,this.doctor))){
             ObjectOutputStream escribiendoFichero = new ObjectOutputStream(new FileOutputStream(this.path) );
             escribiendoFichero.writeObject(citas);
             escribiendoFichero.close();

@@ -1,5 +1,6 @@
 package com.example.actv13;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.ObjectInputStream;
@@ -51,7 +52,26 @@ public static Scanner sc=new Scanner(System.in);
                 int answer=sc.nextInt();
                 switch (answer){
                     case 1:
+                        System.out.println("| * -------------------------------------------- * |");
+                        System.out.println("| *     ********  Nuevo Doctor  *********        * |");
+                        System.out.println("| * -------------------------------------------- * |");
+                        System.out.println("| *     Escribe tu nombre o usuario :            * |");
+                        String Dnombre=sc.nextLine();
+                        System.out.println("| *  Escribe la contraseña para "+Dnombre+" :    * |");
+                        String Dpassword=sc.nextLine();
+                        System.out.println("| *  Que especialidad tiene?:                    * |");
+                        String Despecialidad=sc.nextLine();
+                        System.out.println("| *--------------------------------------------  * |");
 
+                        UUID Duuid = UUID.randomUUID();
+                        String Did = Duuid.toString();
+
+                            Doctor doctor=new Doctor(Did,Dnombre,Dpassword,Despecialidad);
+                        if (doctor.altaDoctor()){
+                            System.out.println("*****  Doctor registrado satisfactoriamente   ****");
+                        }else {
+                            System.out.println("Ocurrio un problema al registrar el doctor, intente de nuevo");
+                        }
                         break;
                     case 2:
                         System.out.println("| * -------------------------------------------- * |");
@@ -76,8 +96,87 @@ public static Scanner sc=new Scanner(System.in);
                         }
                         break;
                     case 3:
+                        Doctor objDoctor = null;
+                        Paciente objPaciente = null;
+                        
+                        System.out.println("| * -------------------------------------------- * |");
+                        System.out.println("| *     ********  Nueva cita  *********      * |");
+                        System.out.println("| * -------------------------------------------- * |");
+                        System.out.println("| *     Escribe la fecha de la cita :            * |");
+                        String fecha=sc.nextLine();
+                        System.out.println("| *     Escribe el motivo de la cita:            * |");
+                        String motivo=sc.nextLine();
+                        System.out.println("| *--------------------------------------------  * |");                        
+
+                        //Mostrando los doctores disponible para una cita
+                        File archivo = new File(this.path);
+                        if (archivo.exists()) {
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.path));
+                            ArrayList<Doctor> doctors =  (ArrayList<Doctor>) leerFichero.readObject();
+                            leyendoFichero.close();
+                            System.out.println("****   doctores disponible para una cita   ****");
+                            for (int i = 0; i < doctors.size(); i++) {
+                                System.out.println("Doctor :"+doctors.get(i).nombre);
+                            }
+                            System.out.println("| *     Escribe el nombre del doctor que atendera la cita:            * |");
+                            String nombreDoctor=sc.nextLine();
+
+                            for (int i = 0; i < doctors.size(); i++) {
+                                if (doctors.get(i).nombre.equals(nombreDoctor)) {
+                                    objDoctor=doctors.get(i);
+                                }
+                            }
+                        }
+
+                        //Mostrando los pacientes disponible para una cita
+                        File archivo2 = new File(this.path);
+                        if (archivo2.exists()) {
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.path));
+                            ArrayList<Paciente> pacientes  = (ArrayList<Paciente>) leerFichero.readObject();
+                            leyendoFichero.close();
+                            System.out.println("****   Pacientes disponible para una cita   ****");
+                            for (int i = 0; i < pacientes.size(); i++) {
+                                System.out.println("Paciente :"+pacientes.get(i).nombre);
+                            }
+                            System.out.println("| *     Escribe el nombre del doctor que atendera la cita:            * |");
+                            String nombreDoctor=sc.nextLine();
+
+                            for (int i = 0; i < pacientes.size(); i++) {
+                                if (pacientes.get(i).nombre.equals(nombreDoctor)) {
+                                     objPaciente=pacientes.get(i);
+                                }
+                            }
+                        }
+                        UUID Cuuid = UUID.randomUUID();
+                        String Cid = Cuuid.toString();
+                        Cita cita =new Cita(Cid,fecha,motivo,objPaciente,objDoctor);
+                        if (cita.altaCita()){
+                            System.out.println("**********  Cita creada con exito  *********");
+                        }
                         break;
                     case 4:
+                        //Mostrando los doctores disponible para una cita
+                        File archivo3 = new File(this.path);
+                        if (archivo3.exists()) {
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.path));
+                            ArrayList<Cita> citas =  (ArrayList<Cita>) leerFichero.readObject();
+                            leyendoFichero.close();
+                            System.out.println("****   Citas existentes   ****");
+                            for (int i = 0; i < citas.size(); i++) {
+                                System.out.println("Id :"+citas.get(i).id+"\n" +
+                                        "Fecha :"+citas.get(i).fecha+"\n" +
+                                        "Doctor :"+citas.get(i).doctor.nombre+"\n" +
+                                        "Paciente :"+citas.get(i).paciente.nombre+"\n");
+                            }
+                            System.out.println("| *     Escribe el Id de la cita que deas eliminar:       * |");
+                            String idCita=sc.nextLine();
+
+                            for (int i = 0; i < citas.size(); i++) {
+                                if (citas.get(i).id.equals(idCita)) {
+                                    citas.remove(i);
+                                }
+                            }
+                        }
                         break;
                     case 5:
                         menu=false;
