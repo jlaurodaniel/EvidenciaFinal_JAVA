@@ -3,7 +3,7 @@ package com.example.actv13;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Doctor extends  Usuario{
+public class Doctor extends  Usuario implements Serializable {
     public String especialidad;
     private final String path="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\doctor.txt";
 

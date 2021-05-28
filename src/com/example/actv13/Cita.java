@@ -3,7 +3,7 @@ package com.example.actv13;
 import java.io.*;
 import java.util.ArrayList;
 
-public class Cita {
+public class Cita implements Serializable {
     private final String path="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\cita.txt";
     public String id;
     public  String fecha;

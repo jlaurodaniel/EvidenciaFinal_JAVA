@@ -1,6 +1,8 @@
 package com.example.actv13;
 
-public class Usuario {
+import java.io.Serializable;
+
+public class Usuario implements Serializable {
     public Usuario(String id, String nombre, String password) {
         this.id = id;
         this.nombre = nombre;

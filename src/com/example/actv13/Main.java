@@ -1,46 +1,68 @@
 package com.example.actv13;
 
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.ObjectInputStream;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.util.UUID;
 
 public class Main {
-    private String pathAdmins="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\admin.txt";
-    private String pathPacientes="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\paciente.txt";
-    private String pathDoctores="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\doctor.txt";
+    private static String  pathAdmins="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\admin.txt";
+    private static String pathPacientes="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\paciente.txt";
+    private static String pathDoctores="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\doctor.txt";
 public static Scanner sc=new Scanner(System.in);
-    public static void main(String[] args) {
+
+    public static void main(String[] args)  {
+        String  adminPath="C:\\Users\\lauro\\OneDrive - Universidad Tecmilenio\\tarea\\TECMILENIO\\6to SEMESTRE\\Computacion en Java\\EvidenciaFinal\\src\\db\\admin.txt";
+        File adminFile = new File(adminPath);
+        ArrayList<Administrador> administradors= new ArrayList<Administrador>();
+        if (!adminFile.exists()) {
+            if (administradors.add(new Administrador("123","Lauro","Lauro123","Super Admin"))){
+                try {
+                    ObjectOutputStream escribiendoFichero = new ObjectOutputStream(new FileOutputStream(adminPath) );
+                    escribiendoFichero.writeObject(administradors);
+                    escribiendoFichero.close();
+                    System.out.println("Se creo el superAdmin ........");
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
         System.out.println("--------------------------------------------");
         System.out.println("- Bienvenido ADMIN a la clinica 'El Tecmi'");
         System.out.println("--------------------------------------------");
         System.out.println("- Escribe tu nombre de usuario: ");
         String user=sc.nextLine();
-        System.out.println("- Escribe tu nombre contraseña: ");
+        System.out.println("- Escribe tu  contraseña: ");
         String pass=sc.nextLine();
         System.out.println("--------------------------------------------");
+
+        try {
+            Login(user,pass);
+        } catch (IOException e) {
+            e.printStackTrace();
+            System.out.println(e.getMessage());
+        } catch (ClassNotFoundException e) {
+            System.out.println(e.getMessage());
+            e.printStackTrace();
+        }
     }
     //Paciente paciente=new Paciente();
 
-    public  void Login(String pass, String user) throws IOException, ClassNotFoundException {
-        Administrador UsuarioSession;
+    public static void Login(String pass, String user) throws IOException, ClassNotFoundException {
         boolean valid=false;
         boolean menu=true;
 
-        ArrayList<Administrador> administradors= new ArrayList<Administrador>();
-        ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(pathAdmins) );
-        administradors = ( ArrayList <Administrador> )leyendoFichero.readObject();
-        leyendoFichero.close();
+        ArrayList<Administrador> administradors;
+            ObjectInputStream leyendoFichero = new ObjectInputStream( new FileInputStream(pathAdmins) );
+            administradors = (ArrayList<Administrador>) leyendoFichero.readObject();
+            leyendoFichero.close();
 
-        for (int i=0;i<administradors.size();i++){
-            if (administradors.get(i).nombre.equals(user) & administradors.get(i).password.equals(pass)){
-                 UsuarioSession=administradors.get(i);
-                 valid=true;
+            for (int i = 0; i < administradors.size(); i++) {
+                if (administradors.get(i).nombre.equals(user) & administradors.get(i).password.equals(pass)) {
+                    valid = true;
+                }
             }
-        }
+
 
         if (valid){
             System.out.println("---- Usuario y contraseña correctos  ------");
@@ -111,11 +133,11 @@ public static Scanner sc=new Scanner(System.in);
                         System.out.println("| *--------------------------------------------  * |");                        
 
                         //Mostrando los doctores disponible para una cita
-                        File archivo = new File(this.pathDoctores);
+                        File archivo = new File(pathDoctores);
                         if (archivo.exists()) {
-                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.pathDoctores));
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(pathDoctores));
                             ArrayList<Doctor> doctors =  (ArrayList<Doctor>) leerFichero.readObject();
-                            leyendoFichero.close();
+                            leerFichero.close();
                             System.out.println("****   doctores disponible para una cita   ****");
                             for (int i = 0; i < doctors.size(); i++) {
                                 System.out.println("Doctor :"+doctors.get(i).nombre);
@@ -131,11 +153,11 @@ public static Scanner sc=new Scanner(System.in);
                         }
 
                         //Mostrando los pacientes disponible para una cita
-                        File archivo2 = new File(this.pathPacientes);
+                        File archivo2 = new File(pathPacientes);
                         if (archivo2.exists()) {
-                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.pathPacientes));
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(pathPacientes));
                             ArrayList<Paciente> pacientes  = (ArrayList<Paciente>) leerFichero.readObject();
-                            leyendoFichero.close();
+                            leerFichero.close();
                             System.out.println("****   Pacientes disponible para una cita   ****");
                             for (int i = 0; i < pacientes.size(); i++) {
                                 System.out.println("Paciente :"+pacientes.get(i).nombre);
@@ -158,11 +180,11 @@ public static Scanner sc=new Scanner(System.in);
                         break;
                     case 4:
                         //Mostrando los doctores disponible para una cita
-                        File archivo3 = new File(this.pathDoctores);
+                        File archivo3 = new File(pathDoctores);
                         if (archivo3.exists()) {
-                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(this.pathDoctores));
+                            ObjectInputStream leerFichero = new ObjectInputStream(new FileInputStream(pathDoctores));
                             ArrayList<Cita> citas =  (ArrayList<Cita>) leerFichero.readObject();
-                            leyendoFichero.close();
+                            leerFichero.close();
                             System.out.println("****   Citas existentes   ****");
                             for (int i = 0; i < citas.size(); i++) {
                                 System.out.println("Id :"+citas.get(i).id+"\n" +
